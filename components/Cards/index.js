@@ -17,3 +17,45 @@
 // </div>
 //
 // Create a card for each of the articles and add the card to the DOM.
+
+axios.get('https://lambda-times-backend.herokuapp.com/articles')
+.then(response=>{
+    Object.keys(response.data.articles).forEach(subject=>{
+        response.data.articles[subject].forEach(attribute=>{
+            document.querySelector('.cards-container').append(cardsMake(attribute));
+        console.log(attribute);
+        })
+    });
+})
+.catch(error=>{console.log(error);
+});
+
+function cardsMake(datum){
+    const divCardMake=
+        document.createElement('div');
+    const divHeadlineMake=
+        document.createElement('div');
+    const divAuthorMake=
+        document.createElement('div');
+    const divImgMake=
+        document.createElement('div');
+    const imgMake=
+        document.createElement('img');
+    const spanMake=
+        document.createElement('span');
+    divCardMake.append(divHeadlineMake);
+    divCardMake.append(divAuthorMake);
+    divAuthorMake.append(divImgMake);
+    divAuthorMake.append(spanMake);
+    divImgMake.append(imgMake)
+    divCardMake.classList.add('card');
+    divHeadlineMake.classList.add('headline')
+    divAuthorMake.classList.add('author');
+    divImgMake.classList.add('img-container');
+    divHeadlineMake.textContent=datum.headline;
+    imgMake.src=datum.authorPhoto;
+    spanMake.textContent=datum.authorName;
+    
+    console.log (datum);
+    return divCardMake;
+};
